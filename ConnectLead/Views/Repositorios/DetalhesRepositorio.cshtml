@@ -1,0 +1,54 @@
+﻿@{
+    ConnectLead.Models.Repositorio.RootObject Repositorio = (ConnectLead.Models.Repositorio.RootObject)ViewBag.Repositorio;
+    IEnumerable<ConnectLead.Models.Contribuidor> Contribuidores = (IEnumerable<ConnectLead.Models.Contribuidor>)ViewBag.Contribuidores;
+
+    ViewBag.Title = "ConnectLead";
+}
+
+<h2 style="text-align:center">Detalhes do Repositório</h2>
+<hr />
+
+<br />
+<div style="height:20px; display:inline-table">
+    <div style="display:inline-block;">
+        <label style="font-size:16px;">Marcar Como Favorito: </label> &nbsp;
+    </div>
+    <div style="display:inline-block; vertical-align:middle">
+        @using (Html.BeginForm("MarcarFavorito", "Repositorios"))
+        {
+            <input type="hidden" name="repositorio" value="@Repositorio.name" />
+            <input type="hidden" name="proprietario" value="@Repositorio.owner.login" />
+
+            //string check = (string)Session["check"];
+            string check = (string)ViewBag.Check;
+            if (check != null)
+            {
+                <input type="checkbox" name="chk_favorito" onClick="this.form.submit();" checked />
+                //Session["Check"] = null;
+                //Session.RemoveAll();
+            }
+            else
+            {
+                <input type="checkbox" name="chk_favorito" onClick="this.form.submit();" />
+            }
+        }
+    </div>
+</div>
+<div style="margin-top:20px;">
+    <label>Nome: </label> @Repositorio.name <br />
+    <label>Descrição: </label> @Repositorio.description <br />
+    <label>Linguagem: </label> @Repositorio.language <br />
+    <label>Última Atualização: </label> @Repositorio.updated_at <br />
+    <label>Dono do Repositório: </label> @Repositorio.owner.login
+</div>
+
+<p>
+    <label>Contribuidores: </label> <br />
+    @if (@Contribuidores != null)
+    {
+        foreach (var item in Contribuidores)
+        {
+            @item.login <br />
+        }
+    }
+</p>

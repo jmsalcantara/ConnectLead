@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ConnectLead.Models.Consulta.Item>
+@{
+    ViewBag.Title = "ConnectLead";
+}
+
+<h2 style="text-align:center">Consultar Repositórios no GitHub</h2>
+
+<div>
+    @using (Html.BeginForm())
+    {
+        <hr />
+        <p style="text-align:center">
+            <input type="text" size="60" id="parametro" name="parametro" placeholder="digite aqui sua pesquisa..." required /> <br /><br />
+            <button type="submit">Pesquisar</button>
+        </p>
+        <hr />
+    }
+</div>
+
+@if (Model != null)
+{
+    int i = 0;
+            foreach (var item in Model)
+            {
+                <div style="width:48%; display:inline-table; text-align:center; margin-bottom:5px;">
+                    <label>@Html.ActionLink(@item.name, "DetalhesRepositorio", "Repositorios", new { nomeProprietario = item.owner.login, nomeRepositorio = item.name }, null)</label>
+                </div>
+                i++;
+            }
+<div style="text-align:center; margin-top:15px; height:auto; width:100%;">
+    @using (Html.BeginForm())
+    {
+        int pagina = int.Parse(Session["pag"].ToString());
+        int totalPaginas = (int)ViewBag.totalPaginas;
+
+        if (pagina > 1)
+        {
+            <button type="submit" name="paginador" value="0">Anterior</button>
+        }
+        else
+        {
+            <button type="submit" name="paginador" value="0" disabled>Anterior</button>
+        }
+
+        if (totalPaginas == 1 || pagina == totalPaginas)
+        {
+            <button type="submit" name="paginador" value="1" disabled>Próxima</button>
+        }
+        else
+        {
+            <button type="submit" name="paginador" value="1">Próxima</button>
+        }
+
+    }
+</div>
+        }

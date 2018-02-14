@@ -1,0 +1,20 @@
+﻿@model IEnumerable<ConnectLead.Models.Repositorio.RootObject>
+
+@{
+    ViewBag.Title = "ConnectLead";
+}
+
+<h2 style="text-align:center">Repositórios Favoritos</h2>
+<hr />
+
+@if (Model != null)
+{
+    foreach (var item in Model.OrderBy(p => p.name))
+    {
+        <div style="display:inline-table; width:48%;">
+            <h4>
+                <label>@Html.ActionLink(@item.name, "DetalhesRepositorio", "Repositorios", new { nomeProprietario = item.owner.login, nomeRepositorio = item.name }, null)</label>
+            </h4>
+        </div> <br />
+    }
+}
